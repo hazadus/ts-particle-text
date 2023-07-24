@@ -6,15 +6,15 @@ export class Particle {
   private originX: number;
   private originY: number;
   // Speed
-  private dx: number;
-  private dy: number;
+  // private dx: number;
+  // private dy: number;
   // Velocity
-  private vx: number;
-  private vy: number;
-  private force: number;
-  private angle: number;
-  private distance: number;
-  private friction: number;
+  // private vx: number;
+  // private vy: number;
+  // private force: number;
+  // private angle: number;
+  // private distance: number;
+  // private friction: number;
   private ease: number;
 
   constructor(x: number, y: number, size: number, color: string, canvasWidth: number) {
@@ -24,14 +24,14 @@ export class Particle {
     this.color = color;
     this.originX = x;
     this.originY = y;
-    this.dx = 0;
-    this.dy = 0;
-    this.vx = 0;
-    this.vy = 0;
-    this.force = 0;
-    this.angle = 0;
-    this.distance = 0;
-    this.friction = Math.random() * 0.6 + 0.15;
+    // this.dx = 0;
+    // this.dy = 0;
+    // this.vx = 0;
+    // this.vy = 0;
+    // this.force = 0;
+    // this.angle = 0;
+    // this.distance = 0;
+    // this.friction = Math.random() * 0.6 + 0.15;
     this.ease = Math.random() * 0.1 + 0.01;
   }
 

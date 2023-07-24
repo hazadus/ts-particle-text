@@ -49,17 +49,22 @@ window.addEventListener("load", function () {
 
     const ctx = canvas.getContext("2d");
     if (ctx) {
-      const fontSize = 50;
-      ctx.fillStyle = "white";
-      ctx.strokeStyle = "red";
-      ctx.lineWidth = 2;
+      const fontSize = 60;
+      const gradient = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
+      gradient.addColorStop(0.25, "red");
+      gradient.addColorStop(0.5, "fuchsia");
+      gradient.addColorStop(0.75, "purple");
+
+      ctx.fillStyle = gradient;
+      ctx.strokeStyle = "white";
+      ctx.lineWidth = 1;
       ctx.textAlign = "center";
       ctx.textBaseline = "middle";
       ctx.font = `Normal ${fontSize}px Impact`;
 
       textInput?.addEventListener("keyup", function (event) {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
-        wrapTextCentered(canvas, ctx, (event.target as HTMLInputElement).value, fontSize, canvas.width / 2);
+        wrapTextCentered(canvas, ctx, (event.target as HTMLInputElement).value, fontSize, canvas.width * 0.8);
       });
     }
   }

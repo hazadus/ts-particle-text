@@ -1,6 +1,6 @@
-# TypeScript + Vite Project Template
+# TypeScript Particle Text
 
-Simple TypeScript project template with Vite as build tool and action for automatic deployment on GitHub pages.
+Particle text animation using TypeScript and HTML Canvas.
 
 ## References
 

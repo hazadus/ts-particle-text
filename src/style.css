@@ -16,3 +16,11 @@ body {
   left: 50%;
   transform: translate(-50%, -50%);
 }
+
+input {
+  position: absolute;
+  width: calc(100% - 20px);
+  padding: 10px;
+  margin: 10px;
+  z-index: 100;
+}

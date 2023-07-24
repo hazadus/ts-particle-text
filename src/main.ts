@@ -9,6 +9,7 @@ window.addEventListener("load", function () {
   canvas.height = window.innerHeight;
 
   const effect = new Effect(canvas);
+  effect.setText("hazadus");
 
   textInput.addEventListener("keyup", function (event) {
     // Update text only when non-space character entered

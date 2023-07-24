@@ -1,3 +1,5 @@
+import { IMouse } from "./types";
+
 export class Particle {
   private x: number;
   private y: number;
@@ -5,16 +7,11 @@ export class Particle {
   private color: string;
   private originX: number;
   private originY: number;
-  // Speed
-  // private dx: number;
-  // private dy: number;
-  // Velocity
-  // private vx: number;
-  // private vy: number;
-  // private force: number;
-  // private angle: number;
-  // private distance: number;
-  // private friction: number;
+  private vx: number;
+  private vy: number;
+  private force: number;
+  private distanceFromMouse: number;
+  private friction: number;
   private ease: number;
 
   constructor(x: number, y: number, size: number, color: string, canvasWidth: number) {
@@ -24,14 +21,11 @@ export class Particle {
     this.color = color;
     this.originX = x;
     this.originY = y;
-    // this.dx = 0;
-    // this.dy = 0;
-    // this.vx = 0;
-    // this.vy = 0;
-    // this.force = 0;
-    // this.angle = 0;
-    // this.distance = 0;
-    // this.friction = Math.random() * 0.6 + 0.15;
+    this.vx = 0;
+    this.vy = 0;
+    this.force = 0;
+    this.distanceFromMouse = 0;
+    this.friction = Math.random() * 0.6 + 0.15;
     this.ease = Math.random() * 0.1 + 0.01;
   }
 
@@ -63,10 +57,26 @@ export class Particle {
   }
 
   /**
-   * Update particle position based on its speed, direction, etc.
+   * Update particle position based on its speed, direction, mouse pointer location, etc.
    */
-  update() {
-    this.x += (this.originX - this.x) * this.ease;
-    this.y += (this.originY - this.y) * this.ease;
+  update(mouse: IMouse) {
+    // Calculate particle's distance from mouse pointer
+    const dx = mouse.x - this.x;
+    const dy = mouse.y - this.y;
+    this.distanceFromMouse = Math.hypot(dy, dx);
+
+    // "Force" that pushes away from mouse pointer:
+    this.force = -mouse.radius / this.distanceFromMouse;
+
+    if (mouse.isPressed && this.distanceFromMouse < mouse.radius) {
+      // Calculate particle direction depending on mouse pointer location
+      const angle = Math.atan2(dy, dx);
+      this.vx = this.force * Math.cos(angle);
+      this.vy = this.force * Math.sin(angle);
+    }
+
+    // Note that `friction` gradually reduces `vx` and `vy`
+    this.x += (this.vx *= this.friction) + (this.originX - this.x) * this.ease;
+    this.y += (this.vy *= this.friction) + (this.originY - this.y) * this.ease;
   }
 }

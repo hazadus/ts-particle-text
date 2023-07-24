@@ -1,10 +1,5 @@
 import { Particle } from "./Particle";
-
-interface IMouse {
-  x: number;
-  y: number;
-  radius: number;
-}
+import { IMouse } from "./types";
 
 /**
  * `Effect` class represents the canvas where we render our effects.
@@ -20,7 +15,7 @@ export class Effect {
 
   constructor(canvas: HTMLCanvasElement) {
     this.canvas = canvas;
-    this.fontSize = this.height / 4;
+    this.fontSize = this.height / 3;
     this.lineHeight = this.fontSize;
     this.maxTextWidth = this.width * 0.8;
     this.gap = 3;
@@ -28,7 +23,9 @@ export class Effect {
     this.mouse = {
       x: 0,
       y: 0,
-      radius: 20000,
+      // Radius around mouse pointer in which particles are affected:
+      radius: 1500,
+      isPressed: false,
     };
 
     const gradient = this.context.createLinearGradient(0, 0, canvas.width, canvas.height);
@@ -47,6 +44,16 @@ export class Effect {
     window.addEventListener("mousemove", (event) => {
       this.mouse.x = event.x;
       this.mouse.y = event.y;
+    });
+
+    window.addEventListener("mousedown", (event) => {
+      this.mouse.isPressed = true;
+      this.mouse.x = event.x;
+      this.mouse.y = event.y;
+    });
+
+    window.addEventListener("mouseup", () => {
+      this.mouse.isPressed = false;
     });
   }
 
@@ -147,7 +154,7 @@ export class Effect {
   renderFrame() {
     this.clear();
     this.particles.forEach((particle) => {
-      particle.update();
+      particle.update(this.mouse);
       particle.drawAsRect(this.context);
     });
   }

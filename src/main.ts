@@ -16,8 +16,8 @@ window.addEventListener("load", function () {
     if (event.key !== " ") effect.setText((event.target as HTMLInputElement).value);
   });
 
-  function animate() {
-    effect.renderFrame();
+  function animate(timestamp: DOMHighResTimeStamp) {
+    effect.renderFrame(timestamp);
     requestAnimationFrame(animate);
   }
 

@@ -12,6 +12,8 @@ export class Effect {
   private particles: Particle[];
   private gap: number; // distance between pixels used when scanning the image to create particles
   private mouse: IMouse;
+  private prevTimestamp: DOMHighResTimeStamp;
+  private fpsValues: DOMHighResTimeStamp[];
 
   constructor(canvas: HTMLCanvasElement) {
     this.canvas = canvas;
@@ -27,6 +29,8 @@ export class Effect {
       radius: 1500,
       isPressed: false,
     };
+    this.prevTimestamp = 0;
+    this.fpsValues = [];
 
     const gradient = this.context.createLinearGradient(0, 0, canvas.width, canvas.height);
     gradient.addColorStop(0.25, "red");
@@ -58,7 +62,7 @@ export class Effect {
   }
 
   /**
-   * Return associated 2D context.
+   * Associated 2D context.
    */
   get context() {
     return this.canvas.getContext("2d")!;
@@ -131,6 +135,34 @@ export class Effect {
   }
 
   /**
+   * Calculate and print FPS and some other info.
+   * @param timestamp current time (based on the number of milliseconds since time origin).
+   */
+  handleFPS(timestamp: DOMHighResTimeStamp) {
+    const fps = Math.round(1000 / (timestamp - this.prevTimestamp));
+    this.prevTimestamp = timestamp;
+
+    // Only store last N fps values
+    this.fpsValues.push(fps);
+    if (this.fpsValues.length > 120) this.fpsValues.shift();
+
+    const averageFps = Math.round(
+      this.fpsValues.reduce((accumulator, currentValue) => accumulator + currentValue, 0) /
+        this.fpsValues.length,
+    );
+
+    const infoLine = `${averageFps} fps | ${this.width}x${this.height} px | ${this.particles.length} particles`;
+
+    // Render text to context
+    this.context.save();
+    this.context.textAlign = "start";
+    this.context.font = "normal 10pt Courier";
+    this.context.fillStyle = "gray";
+    this.context.fillText(infoLine, 10, 64);
+    this.context.restore();
+  }
+
+  /**
    * Clear the canvas.
    */
   clear() {
@@ -150,12 +182,14 @@ export class Effect {
 
   /**
    * Clear canvas, update particle positions, and draw them.
+   * @param timestamp current time (based on the number of milliseconds since time origin).
    */
-  renderFrame() {
+  renderFrame(timestamp: DOMHighResTimeStamp) {
     this.clear();
     this.particles.forEach((particle) => {
       particle.update(this.mouse);
       particle.drawAsRect(this.context);
     });
+    this.handleFPS(timestamp);
   }
 }

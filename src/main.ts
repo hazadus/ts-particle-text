@@ -49,13 +49,14 @@ window.addEventListener("load", function () {
     const ctx = canvas.getContext("2d");
     if (ctx) {
       const text = "TypeScript Particle Text Project, using Vite as build tool";
+      const fontSize = 50;
       ctx.fillStyle = "white";
       ctx.strokeStyle = "red";
       ctx.lineWidth = 2;
       ctx.textAlign = "center";
       ctx.textBaseline = "middle";
-      ctx.font = "Normal 50px Impact";
-      wrapTextCentered(canvas, ctx, text, 50, canvas.width / 2);
+      ctx.font = `Normal ${fontSize}px Impact`;
+      wrapTextCentered(canvas, ctx, text, fontSize, canvas.width / 2);
     }
   }
 });

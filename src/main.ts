@@ -40,6 +40,7 @@ function wrapTextCentered(
 // App entry point
 window.addEventListener("load", function () {
   const canvas: HTMLCanvasElement | null = document.querySelector<HTMLCanvasElement>("#canvas1");
+  const textInput: HTMLInputElement | null = document.querySelector<HTMLInputElement>("#textInput");
 
   if (canvas) {
     canvas.width = window.innerWidth;
@@ -48,7 +49,6 @@ window.addEventListener("load", function () {
 
     const ctx = canvas.getContext("2d");
     if (ctx) {
-      const text = "TypeScript Particle Text Project, using Vite as build tool";
       const fontSize = 50;
       ctx.fillStyle = "white";
       ctx.strokeStyle = "red";
@@ -56,7 +56,11 @@ window.addEventListener("load", function () {
       ctx.textAlign = "center";
       ctx.textBaseline = "middle";
       ctx.font = `Normal ${fontSize}px Impact`;
-      wrapTextCentered(canvas, ctx, text, fontSize, canvas.width / 2);
+
+      textInput?.addEventListener("keyup", function (event) {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        wrapTextCentered(canvas, ctx, (event.target as HTMLInputElement).value, fontSize, canvas.width / 2);
+      });
     }
   }
 });

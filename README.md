@@ -18,6 +18,7 @@ Check out live demo at https://hazadus.github.io/ts-particle-text/.
 - [Vite - Getting Started](https://vitejs.dev/guide/#getting-started)
 - [Vite - Deploy a Static Site on GitHub Pages](https://vitejs.dev/guide/static-deploy.html#github-pages)
 - [Particle Text with Vanilla JavaScript](https://www.youtube.com/watch?v=2F2t1RJoGt8)
+- Font - [Bangers](https://fonts.google.com/specimen/Bangers)
 
 ## Notes
 

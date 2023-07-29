@@ -2,6 +2,7 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  font-family: "Bangers", cursive;
 }
 
 body {
@@ -20,7 +21,8 @@ body {
 input {
   position: absolute;
   width: calc(100% - 20px);
-  padding: 10px;
+  font-size: 22px;
+  padding: 6px;
   margin: 10px;
   z-index: 100;
 }

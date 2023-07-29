@@ -43,7 +43,7 @@ export class Effect {
     this.context.lineWidth = 3;
     this.context.textAlign = "center";
     this.context.textBaseline = "middle";
-    this.context.font = `Normal ${this.fontSize}px Impact`;
+    this.context.font = `Normal ${this.fontSize}px Bangers`;
 
     window.addEventListener("mousemove", (event) => {
       this.mouse.x = event.x;
@@ -65,7 +65,9 @@ export class Effect {
    * Associated 2D context.
    */
   get context() {
-    return this.canvas.getContext("2d")!;
+    return this.canvas.getContext("2d", {
+      willReadFrequently: true,
+    })!;
   }
 
   /**

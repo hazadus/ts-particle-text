@@ -16,6 +16,11 @@ window.addEventListener("load", function () {
     if (event.key !== " ") effect.setText((event.target as HTMLInputElement).value);
   });
 
+  window.addEventListener("resize", () => {
+    effect.handleCanvasResize();
+    effect.setText(textInput.value || "hazadus");
+  });
+
   function animate(timestamp: DOMHighResTimeStamp) {
     effect.renderFrame(timestamp);
     requestAnimationFrame(animate);

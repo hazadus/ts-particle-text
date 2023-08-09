@@ -6,9 +6,9 @@ import { IMouse } from "./types";
  */
 export class Effect {
   private canvas: HTMLCanvasElement;
-  private fontSize: number;
-  private lineHeight: number;
-  private maxTextWidth: number;
+  private fontSize: number = 0;
+  private lineHeight: number = 0;
+  private maxTextWidth: number = 0;
   private particles: Particle[];
   private gap: number; // distance between pixels used when scanning the image to create particles
   private mouse: IMouse;
@@ -17,9 +17,8 @@ export class Effect {
 
   constructor(canvas: HTMLCanvasElement) {
     this.canvas = canvas;
-    this.fontSize = this.height / 3;
-    this.lineHeight = this.fontSize;
-    this.maxTextWidth = this.width * 0.8;
+    this.handleCanvasResize();
+
     this.gap = 3;
     this.particles = [];
     this.mouse = {
@@ -31,19 +30,6 @@ export class Effect {
     };
     this.prevTimestamp = 0;
     this.fpsValues = [];
-
-    const gradient = this.context.createLinearGradient(0, 0, canvas.width, canvas.height);
-    gradient.addColorStop(0.25, "red");
-    gradient.addColorStop(0.5, "fuchsia");
-    gradient.addColorStop(0.75, "purple");
-
-    this.context.fillStyle = gradient;
-    this.canvas.style.background = "black";
-    this.context.strokeStyle = "white";
-    this.context.lineWidth = 3;
-    this.context.textAlign = "center";
-    this.context.textBaseline = "middle";
-    this.context.font = `Normal ${this.fontSize}px Bangers`;
 
     window.addEventListener("mousemove", (event) => {
       this.mouse.x = event.x;
@@ -59,6 +45,31 @@ export class Effect {
     window.addEventListener("mouseup", () => {
       this.mouse.isPressed = false;
     });
+  }
+
+  /**
+   * Set properties based on canvas size.
+   */
+  handleCanvasResize() {
+    this.canvas.width = window.innerWidth;
+    this.canvas.height = window.innerHeight;
+
+    this.fontSize = this.height / 3;
+    this.lineHeight = this.fontSize;
+    this.maxTextWidth = this.width * 0.8;
+
+    const gradient = this.context.createLinearGradient(0, 0, this.canvas.width, this.canvas.height);
+    gradient.addColorStop(0.25, "red");
+    gradient.addColorStop(0.5, "fuchsia");
+    gradient.addColorStop(0.75, "purple");
+
+    this.context.fillStyle = gradient;
+    this.canvas.style.background = "black";
+    this.context.strokeStyle = "white";
+    this.context.lineWidth = 3;
+    this.context.textAlign = "center";
+    this.context.textBaseline = "middle";
+    this.context.font = `Normal ${this.fontSize}px Bangers`;
   }
 
   /**

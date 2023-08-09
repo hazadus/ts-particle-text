@@ -12,6 +12,8 @@ body {
 #canvas1 {
   background: black;
   position: absolute;
+  width: 100vw;
+  height: 100vh;
   /* Center the canvas: */
   top: 50%;
   left: 50%;

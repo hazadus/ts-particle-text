@@ -54,7 +54,7 @@ export class Effect {
     this.canvas.width = window.innerWidth;
     this.canvas.height = window.innerHeight;
 
-    this.fontSize = this.height / 3;
+    this.fontSize = this.height / 3.2;
     this.lineHeight = this.fontSize;
     this.maxTextWidth = this.width * 0.8;
 
@@ -69,7 +69,7 @@ export class Effect {
     this.context.lineWidth = 3;
     this.context.textAlign = "center";
     this.context.textBaseline = "middle";
-    this.context.font = `Normal ${this.fontSize}px Bangers`;
+    this.context.font = `Normal ${this.fontSize}px Rubik Wet Paint`;
   }
 
   /**
